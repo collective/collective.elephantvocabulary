@@ -1,1 +1,10 @@
 *.swp
+*.pyc
+/.installed.cfg
+/bin
+/collective.hiddentermsvocabulary.egg-info
+/coverage
+/develop-eggs
+/eggs
+/include
+/lib

@@ -5,7 +5,7 @@ version = '0.1'
 setup(name='collective.hiddentermsvocabulary',
       version=version,
       description="zope vocabulary with possibility to hide terms",
-      long_description=open("README.txt").read(),
+      long_description=open("README.rst").read(),
       classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Zope",
@@ -24,7 +24,14 @@ setup(name='collective.hiddentermsvocabulary',
           'setuptools',
           # -*- Extra requirements: -*-
       ],
+      extras_require = {
+        'tests': [
+            'plone.testing [zca]',
+            ]
+      },
       entry_points="""
       # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )

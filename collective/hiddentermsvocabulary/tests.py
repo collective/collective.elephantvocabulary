@@ -3,7 +3,7 @@ import unittest2 as unittest
 import doctest
 
 from plone.testing import layered
-from collective.hiddentermsvocabulary.testing import HIDDEN_TERMS_VOCAB_LAYER
+from collective.hiddentermsvocabulary.testing import VOCAB_LAYER
 
 
 def test_suite():
@@ -11,8 +11,9 @@ def test_suite():
     suite.addTests([
         layered(doctest.DocFileSuite(
                     os.path.join('..', '..', 'README.rst'),
-                    package='collective.hiddentermsvocabulary'),
-                layer = HIDDEN_TERMS_VOCAB_LAYER),
+                    package='collective.hiddentermsvocabulary',
+                    optionflags=doctest.ELLIPSIS),
+                layer = VOCAB_LAYER),
     ])
     return suite
 

@@ -1,0 +1,49 @@
+
+    <html>
+      <head><title>Test coverage for collective.hiddentermsvocabulary.vocabulary</title>
+      <style type="text/css">
+        a {text-decoration: none; display: block; padding-right: 1em;}
+        a:hover {background: #EFA;}
+        hr {height: 1px; border: none; border-top: 1px solid gray;}
+        .notcovered {background: #FCC;}
+        .footer {margin: 2em; font-size: small; color: gray;}
+      </style>
+      </head>
+      <body><h1>Test coverage for collective.hiddentermsvocabulary.vocabulary</h1>
+      <table>
+    
+<tr><td><a href="collective.html">collective/</a></td> <td style="background: red">&nbsp;&nbsp;&nbsp;&nbsp;</td> <td>covered 76% (16 of 69 uncovered)</td></tr>
+<tr><td><a href="collective.hiddentermsvocabulary.html">&nbsp;&nbsp;&nbsp;&nbsp;hiddentermsvocabulary/</a></td> <td style="background: red">&nbsp;&nbsp;&nbsp;&nbsp;</td> <td>covered 76% (16 of 69 uncovered)</td></tr>
+<tr><td><a href="collective.hiddentermsvocabulary.vocabulary.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vocabulary.py</a></td> <td style="background: red">&nbsp;&nbsp;&nbsp;&nbsp;</td> <td>covered 65% (7 of 20 uncovered)</td></tr>
+</table><hr/>
+<pre>
+       <B><FONT COLOR="#A020F0">from</FONT></B> zope.interface <B><FONT COLOR="#A020F0">import</FONT></B> implements
+<div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt; <B><FONT COLOR="#A020F0">from</FONT></B> zope.schema.vocabulary <B><FONT COLOR="#A020F0">import</FONT></B> getVocabularyRegistry</div><div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt; <B><FONT COLOR="#A020F0">from</FONT></B> zope.schema.interfaces <B><FONT COLOR="#A020F0">import</FONT></B> IVocabularyFactory</div><div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt; <B><FONT COLOR="#A020F0">from</FONT></B> zope.schema.interfaces <B><FONT COLOR="#A020F0">import</FONT></B> ISource</div>       
+       
+<div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt; <B><FONT COLOR="#A020F0">class</FONT></B> VocabularyFactory(object):</div>       
+<div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt;     implements(IVocabularyFactory, ISource)</div>       
+<div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt;     <B><FONT COLOR="#A020F0">def</FONT></B> <B><FONT COLOR="#0000FF">__init__</FONT></B>(self, original_vocab, hidden_terms, wrapper):</div>    5:         self.original_vocab = original_vocab
+    5:         self.hidden_terms = hidden_terms
+    5:         self.wrapper = wrapper
+       
+<div class="notcovered">&gt;&gt;&gt;&gt;&gt;&gt;     <B><FONT COLOR="#A020F0">def</FONT></B> <B><FONT COLOR="#0000FF">__call__</FONT></B>(self, context):</div>    5:         <B><FONT COLOR="#A020F0">if</FONT></B> isinstance(self.original_vocab, basestring):
+    1:             original_vocab = getVocabularyRegistry().get(
+    1:                     context, self.original_vocab)
+               <B><FONT COLOR="#A020F0">else</FONT></B>:
+    4:             original_vocab = self.original_vocab
+       
+    5:         <B><FONT COLOR="#A020F0">if</FONT></B> callable(self.hidden_terms):
+    1:             self.hidden_terms = self.hidden_terms(context, original_vocab)
+       
+    5:         <B><FONT COLOR="#A020F0">if</FONT></B> getattr(original_vocab, <B><FONT COLOR="#BC8F8F">'hidden_terms'</FONT></B>, False) <B><FONT COLOR="#A020F0">and</FONT></B> \
+    1:            isinstance(original_vocab.hidden_terms, list):
+    1:             self.hidden_terms += original_vocab.hidden_terms
+       
+    5:         <B><FONT COLOR="#A020F0">return</FONT></B> self.wrapper(original_vocab, self.hidden_terms)
+</pre>
+
+      <div class="footer">
+      Generated for revision exported on 2010-10-06 07:46:42.298196Z
+      </div>
+    </body>
+    </html>

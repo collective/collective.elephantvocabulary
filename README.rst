@@ -119,6 +119,14 @@ Todo
 History
 =======
 
+0.1.1 (2010-10-08)
+------------------
+
+ * add dependencies from where we import (using `mr.igor`_) [garbas]
+ * add link to ``zope.schema`` which was breaking formating for rst
+   formatting [garbas]
+ * initial release was broken (missing README.rst) [garbas]
+
 0.1 (2010-10-08)
 ----------------
 
@@ -127,3 +135,5 @@ History
 
 .. _`Rok Garbas`: http://www.garbas.si
 .. _`4teamwork`: http://4teamwork.ch
+.. _`zope.schema`: http://pypi.python.org/pypi/zope.schema
+.. _`mr.igor`: http://pypi.python.org/pypi/mr.igor

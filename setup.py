@@ -4,7 +4,8 @@ version = '0.1'
 
 setup(name='collective.elephantvocabulary',
       version=version,
-      description="type of zope vocabularies that dont \"forget\"",
+      description="type of zope vocabularies that dont \"forget\", like \
+                   elephants",
       long_description=open("README.rst").read(),
       classifiers=[
         "Programming Language :: Python",

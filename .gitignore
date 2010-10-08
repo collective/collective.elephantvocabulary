@@ -2,7 +2,7 @@
 *.pyc
 /.installed.cfg
 /bin
-/collective.hiddentermsvocabulary.egg-info
+/collective.elephantvocabulary.egg-info
 /coverage
 /develop-eggs
 /eggs

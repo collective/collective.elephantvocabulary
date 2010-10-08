@@ -1,5 +1,5 @@
-from collective.hiddentermsvocabulary.vocabulary import VocabularyFactory
-from collective.hiddentermsvocabulary.hidden import WrapperHidden
+from collective.elephantvocabulary.vocabulary import VocabularyFactory
+from collective.elephantvocabulary.hidden import WrapperHidden
 
 
 def wrap_vocabulary(original_vocab, hidden_terms=[], wrapper=WrapperHidden):

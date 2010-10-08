@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 version = '0.1'
 
-setup(name='collective.hiddentermsvocabulary',
+setup(name='collective.elephantvocabulary',
       version=version,
-      description="zope vocabulary with possibility to hide terms",
+      description="type of zope vocabularies that dont \"forget\"",
       long_description=open("README.rst").read(),
       classifiers=[
         "Programming Language :: Python",
@@ -14,7 +14,7 @@ setup(name='collective.hiddentermsvocabulary',
       keywords='zope plone vocabulary',
       author='Rok Garbas',
       author_email='rok@garbas.si',
-      url='http://github.com/collective/collective.hiddentermsvocabulary',
+      url='http://github.com/collective/collective.elephantvocabulary',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['collective'],

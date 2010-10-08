@@ -119,7 +119,7 @@ Todo
 History
 =======
 
-0.1 (2010-10-XX)
+0.1 (2010-10-08)
 ----------------
 
  * initial release [garbas]

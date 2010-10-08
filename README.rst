@@ -1,13 +1,25 @@
 Introduction
 ============
 
-TODO: intro text
+Like elephants don't forget anything, so does't
+``collective.elephantvocabulary``. It provides a wrapper around for existing
+`zope.schema`_ vocabularies and make them not forget anything.
+
+Example usecase would be a vocabulary (source) of users which from certain
+point in time wants to hide / deactivate some users for form or listing. But
+at the same time you want keep old references to user term working. This is
+when ``collective.elephantvocabulary`` comes into the picture. With it you
+wrap existing vocabulary of users and provide set of hidden list of users
+(term values).
+
 
 .. contents::
 
 
 Usage
 =====
+
+Some example content and vocabularies
 
     >>> context = layer.context
     >>> example_vocab = layer.example_vocab
@@ -16,11 +28,20 @@ Usage
     >>> [i.value for i in example_vocab]
     [1, 2, 3, 4]
 
-    >>> from collective.hiddentermsvocabulary import wrap_vocabulary
+Bellow is out wraper method we use to make our existing vocab more 
+elephant-like.
+
+    >>> from collective.elephantvocabulary import wrap_vocabulary
+
+
+In first exampe we pass to our ``wrap_vocabulary`` a vocabulary of 
+[1, 2, 3, 4] and we set terms 2 and 3 to hidden. ``wrap_vocabulary``
+returns ``VocabularyFactory`` which needs to be called with context
+(you could also register it with as utility).
 
     >>> wrapped_vocab_factory = wrap_vocabulary(example_vocab, [2, 3])
     >>> print wrapped_vocab_factory
-    <collective.hiddentermsvocabulary.vocabulary.VocabularyFactory object at ...>
+    <collective.elephantvocabulary.vocabulary.VocabularyFactory object at ...>
 
     >>> wrapped_vocab = wrapped_vocab_factory(context)
     >>> [i.value for i in wrapped_vocab]
@@ -38,14 +59,19 @@ Usage
     >>> wrapped_vocab.getTerm(3).value
     3
 
-We can also just call vocabulary by name.
+Above we see what ``collective.elephantvocabulary`` is all about. When listing
+vocabulary hidden terms are not listed. But when item is requested with its
+term value then term is also returned. Also length of vocabulary is unchanged.
+It still shows original lenght of vocabulary.
+
+We can also call vocabulary by name it was register with ZCA machinery..
 
     >>> wrapped_vocab2 = wrap_vocabulary('example-vocab', [2, 3])(context)
     >>> [i.value for i in wrapped_vocab2]
     [1, 4]
 
-``hidden_terms`` parameter of ``wrap_vocabulary`` can also be callable which
-expects 2 parameters, ``context`` and ``original vocabulary``.
+``hidden_terms`` parameter (second argument we pass to ``wrap_vocabulary``) can
+also be callable which expects 2 parameters, ``context`` and ``original vocabulary``.
 
     >>> def hidden_terms(context, vocab):
     ...     return [1, 4]
@@ -54,7 +80,7 @@ expects 2 parameters, ``context`` and ``original vocabulary``.
     >>> [i.value for i in wrapped_vocab3]
     [2, 3]
 
-``collective.hiddentermsvocabulary`` also works with sources.
+``collective.elephantvocabulary`` also works with sources.
 
     >>> [i.value for i in example_source]
     [1, 2, 3, 4]
@@ -66,7 +92,6 @@ expects 2 parameters, ``context`` and ``original vocabulary``.
     >>> [i.value for i in wrapped_source.search()]
     [2]
 
-
 If vocabulary already provides set of hidden terms they are passed to wrapped
 vocabulary.
 
@@ -76,13 +101,19 @@ vocabulary.
     [3, 4]
 
 
-
 Credits
 =======
 
 Generously sponsored by `4teamwork`_.
 
  * `Rok Garbas`_, author
+
+
+Todo
+====
+
+ * provide list of enabled valued (other way around then hidden_terms is working)
+ * provide test for custom wrapper class
 
 
 History

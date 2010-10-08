@@ -119,6 +119,11 @@ Todo
 History
 =======
 
+0.1.2 (2010-10-08)
+------------------
+
+ * misspelled dependency, feeling silly [garbas]
+
 0.1.1 (2010-10-08)
 ------------------
 

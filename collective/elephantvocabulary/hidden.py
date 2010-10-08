@@ -2,7 +2,7 @@
 
 class WrapperHidden(object):
 
-    def __init__(self, vocab, hidden_terms):
+    def __init__(self, vocab, hidden_terms, field=None):
         self.vocab, self.hidden_terms = vocab, hidden_terms
 
     def __contains__(self, name):
@@ -20,6 +20,7 @@ class WrapperHidden(object):
                 yield term
 
     def __iter__(self):
+
         for term in self.vocab:
             if term.value not in self.hidden_terms:
                 yield term

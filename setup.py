@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.1.1'
+version = '0.1.2'
 
 setup(name='collective.elephantvocabulary',
       version=version,
@@ -23,7 +23,7 @@ setup(name='collective.elephantvocabulary',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'zope.interfaces',
+          'zope.interface',
           'zope.schema',
       ],
       extras_require = {

@@ -1,6 +1,12 @@
 
+from zope.interface import implements
+from collective.elephantvocabulary.interfaces import IElephantVocabulary
+from zope.schema.interfaces import ISource
+
 
 class WrapperHidden(object):
+
+    implements(IElephantVocabulary, ISource)
 
     def __init__(self, vocab, hidden_terms, field=None):
         self.vocab, self.hidden_terms = vocab, hidden_terms

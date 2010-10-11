@@ -1,12 +1,12 @@
 from zope.interface import implements
 from zope.schema.vocabulary import getVocabularyRegistry
 from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.interfaces import ISource
+from zope.schema.interfaces import IContextSourceBinder
 
 
 class VocabularyFactory(object):
 
-    implements(IVocabularyFactory, ISource)
+    implements(IVocabularyFactory, IContextSourceBinder)
 
     def __init__(self, original_vocab, hidden_terms, wrapper):
         self.original_vocab = original_vocab

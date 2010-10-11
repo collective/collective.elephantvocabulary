@@ -172,7 +172,7 @@ Vocabulary will ass to the list of passed ``visible_terms`` or ``hidden_terms``.
     [1, 3]
 
 We could also store ``hidden_terms`` and ``visible_terms`` in
-`plone.register`_. Instead of creating our own methos which reads from
+`plone.registry`_. Instead of creating our own methos which reads from
 plone.registry ``collective.elephantvocabulary`` provides helper parameters:
 ``hidden_terms_from_registry`` and ``visible_terms_from_registry``.
 

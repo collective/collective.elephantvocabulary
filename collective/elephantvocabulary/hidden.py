@@ -1,32 +1,8 @@
 
-from zope.interface import implements
-from collective.elephantvocabulary.interfaces import IElephantVocabulary
-from zope.schema.interfaces import ISource
+from collective.elephantvocabulary.base import WrapperBase
 
 
-class WrapperHidden(object):
+class WrapperHidden(WrapperBase):
 
-    implements(IElephantVocabulary, ISource)
-
-    def __init__(self, vocab, hidden_terms, field=None):
-        self.vocab, self.hidden_terms = vocab, hidden_terms
-
-    def __contains__(self, name):
-        return getattr(self.vocab, '__contains__')(name)
-
-    def __getattr__(self, name):
-        return getattr(self.vocab, name)
-
-    def __len__(self):
-        return len(self.vocab)
-
-    def search(self, *args, **kw):
-        for term in self.vocab.search(*args, **kw):
-            if term.value not in self.hidden_terms:
-                yield term
-
-    def __iter__(self):
-
-        for term in self.vocab:
-            if term.value not in self.hidden_terms:
-                yield term
+    def __init__(self, vocab, hidden_terms=None):
+        super(WrapperHidden, self).__init__(vocab, None, hidden_terms)

@@ -39,7 +39,7 @@ In first exampe we pass to our ``wrap_vocabulary`` a vocabulary of
 returns ``VocabularyFactory`` which needs to be called with context
 (you could also register it with as utility).
 
-    >>> wrapped_vocab_factory = wrap_vocabulary(example_vocab, [2, 3])
+    >>> wrapped_vocab_factory = wrap_vocabulary(example_vocab, hidden_terms=[2, 3])
     >>> print wrapped_vocab_factory
     <collective.elephantvocabulary.vocabulary.VocabularyFactory object at ...>
 
@@ -59,6 +59,26 @@ returns ``VocabularyFactory`` which needs to be called with context
     >>> wrapped_vocab.getTerm(3).value
     3
 
+Similar we can to to limit items shown only to the set we want (via
+``visible_terms``)
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 visible_terms=[2, 3])(context)
+    >>> [i.value for i in wrapped_vocab]
+    [2, 3]
+
+    >>> len(wrapped_vocab) == len(example_vocab)
+    True
+
+    >>> 2 in wrapped_vocab
+    True
+
+    >>> 5 in wrapped_vocab
+    False
+
+    >>> wrapped_vocab.getTerm(1).value
+    1
+
 Above we see what ``collective.elephantvocabulary`` is all about. When listing
 vocabulary hidden terms are not listed. But when item is requested with its
 term value then term is also returned. Also length of vocabulary is unchanged.
@@ -66,19 +86,30 @@ It still shows original lenght of vocabulary.
 
 We can also call vocabulary by name it was register with ZCA machinery..
 
-    >>> wrapped_vocab2 = wrap_vocabulary('example-vocab', [2, 3])(context)
-    >>> [i.value for i in wrapped_vocab2]
+    >>> wrapped_vocab = wrap_vocabulary('example-vocab',
+    ...                                  hidden_terms=[2, 3])(context)
+    >>> [i.value for i in wrapped_vocab]
     [1, 4]
 
-``hidden_terms`` parameter (second argument we pass to ``wrap_vocabulary``) can
-also be callable which expects 2 parameters, ``context`` and ``original vocabulary``.
+``hidden_terms`` or ``visible_terms`` parameter (second argument we pass to
+``wrap_vocabulary``) can also be callable which expects 2 parameters,
+``context`` and ``original vocabulary``.
 
     >>> def hidden_terms(context, vocab):
     ...     return [1, 4]
 
-    >>> wrapped_vocab3 = wrap_vocabulary(example_vocab, hidden_terms)(context)
-    >>> [i.value for i in wrapped_vocab3]
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 hidden_terms=hidden_terms)(context)
+    >>> [i.value for i in wrapped_vocab]
     [2, 3]
+
+    >>> def visible_terms(context, vocab):
+    ...     return [1, 4]
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 visible_terms=hidden_terms)(context)
+    >>> [i.value for i in wrapped_vocab]
+    [1, 4]
 
 ``collective.elephantvocabulary`` also works with sources.
 
@@ -88,17 +119,65 @@ also be callable which expects 2 parameters, ``context`` and ``original vocabula
     >>> [i.value for i in example_source.search()]
     [1, 2]
 
-    >>> wrapped_source = wrap_vocabulary(example_source, [1, 4])(context)
+    >>> wrapped_source = wrap_vocabulary(example_source, hidden_terms=[1, 4])(context)
     >>> [i.value for i in wrapped_source.search()]
     [2]
+
+    >>> wrapped_source = wrap_vocabulary(example_source, visible_terms=[1, 4])(context)
+    >>> [i.value for i in wrapped_source.search()]
+    [1]
 
 If vocabulary already provides set of hidden terms they are passed to wrapped
 vocabulary.
 
     >>> example_vocab.hidden_terms = [1, 2]
-    >>> wrapped_vocab4 = wrap_vocabulary(example_vocab)(context)
-    >>> [i.value for i in wrapped_vocab4]
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab)(context)
+    >>> [i.value for i in wrapped_vocab]
     [3, 4]
+
+
+    >>> del example_vocab.hidden_terms
+
+    >>> example_vocab.visible_terms= [1, 2]
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab)(context)
+    >>> [i.value for i in wrapped_vocab]
+    [1, 2]
+
+    >>> del example_vocab.visible_terms
+
+Vocabulary will ass to the list of passed ``visible_terms`` or ``hidden_terms``.
+
+    >>> example_vocab.hidden_terms = [1, 2]
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 hidden_terms=[2, 3])(context)
+    >>> [i.value for i in wrapped_vocab]
+    [4]
+
+
+    >>> del example_vocab.hidden_terms
+
+    >>> example_vocab.visible_terms= [1]
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 visible_terms=[1, 2, 3])(context)
+    >>> [i.value for i in wrapped_vocab]
+    [1, 2, 3]
+
+    >>> del example_vocab.visible_terms
+
+``hidden_terms`` and ``visible_terms`` can also work together.
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...                                 visible_terms=[1, 2, 3],
+    ...                                 hidden_terms=[2])(context)
+    >>> [i.value for i in wrapped_vocab]
+    [1, 3]
+
+And if we don't pass anything to ``wrap_vocabulary`` then it should ack as
+normal vocabulary.
+
+    >>> wrapped_vocab5 = wrap_vocabulary(example_vocab)(context)
+    >>> [i.value for i in wrapped_vocab5]
+    [1, 2, 3, 4]
 
 
 Credits
@@ -112,12 +191,23 @@ Generously sponsored by `4teamwork`_.
 Todo
 ====
 
- * provide list of enabled valued (other way around then hidden_terms is working)
- * provide test for custom wrapper class
+ * provide test / documentation for custom wrapper class
+ * coverage should show 100%, but its failing on method and import lines, weird.
 
 
 History
 =======
+
+0.2 (2010-10-11)
+----------------
+
+ * visible_terms parameter added to ``wrap_vocabulary``, by default visible_terms
+   and hidden_terms work "together" (via WrapperBase) [garbas]
+
+0.1.3 (2010-10-11)
+------------------
+
+ * marking wrapper vocabularies with IElephantVocabulary interface [garbas]
 
 0.1.2 (2010-10-08)
 ------------------

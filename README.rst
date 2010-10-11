@@ -1,14 +1,14 @@
 Introduction
 ============
 
-Like elephants don't forget anything, so does't
+Like elephants don't forget anything, so does not
 ``collective.elephantvocabulary``. It provides a wrapper around for existing
 `zope.schema`_ vocabularies and make them not forget anything.
 
 Example usecase would be a vocabulary (source) of users which from certain
 point in time wants to hide / deactivate some users for form or listing. But
 at the same time you want keep old references to user term working. This is
-when ``collective.elephantvocabulary`` comes into the picture. With it you
+where ``collective.elephantvocabulary`` comes into the picture. With it you
 wrap existing vocabulary of users and provide set of hidden list of users
 (term values).
 
@@ -32,7 +32,6 @@ Bellow is out wraper method we use to make our existing vocab more
 elephant-like.
 
     >>> from collective.elephantvocabulary import wrap_vocabulary
-
 
 In first exampe we pass to our ``wrap_vocabulary`` a vocabulary of 
 [1, 2, 3, 4] and we set terms 2 and 3 to hidden. ``wrap_vocabulary``
@@ -172,6 +171,49 @@ Vocabulary will ass to the list of passed ``visible_terms`` or ``hidden_terms``.
     >>> [i.value for i in wrapped_vocab]
     [1, 3]
 
+We could also store ``hidden_terms`` and ``visible_terms`` in
+`plone.register`_. Instead of creating our own methos which reads from
+plone.registry ``collective.elephantvocabulary`` provides helper parameters:
+``hidden_terms_from_registry`` and ``visible_terms_from_registry``.
+
+    >>> from zope.component import getUtility
+    >>> from plone.registry import field
+    >>> from plone.registry import Record
+    >>> from plone.registry.interfaces import IRegistry
+
+    >>> example_registry_record = Record(
+    ...         field.List(title=u"Test", min_length=0, max_length=10, 
+    ...                    value_type=field.Int(title=u"Value")))
+    >>> example_registry_record.value = [1, 2]
+
+    >>> registry = getUtility(IRegistry)
+    >>> registry.records['example.hidden_terms'] = example_registry_record
+    >>> registry.records['example.visible_terms'] = example_registry_record
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...         visible_terms_from_registry='example.visible_terms')(context)
+    >>> [i.value for i in wrapped_vocab]
+    [1, 2]
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...         hidden_terms_from_registry='example.hidden_terms')(context)
+    >>> [i.value for i in wrapped_vocab]
+    [3, 4]
+
+Or we can use them in combination.
+
+    >>> example_registry_record2 = Record(
+    ...         field.List(title=u"Test", min_length=0, max_length=10, 
+    ...                    value_type=field.Int(title=u"Value")))
+    >>> example_registry_record2.value = [1, 2, 3]
+    >>> registry.records['example.visible_terms'] = example_registry_record2
+
+    >>> wrapped_vocab = wrap_vocabulary(example_vocab,
+    ...         visible_terms_from_registry='example.visible_terms',
+    ...         hidden_terms_from_registry='example.hidden_terms')(context)
+    >>> [i.value for i in wrapped_vocab]
+    [3]
+
 And if we don't pass anything to ``wrap_vocabulary`` then it should ack as
 normal vocabulary.
 
@@ -197,6 +239,13 @@ Todo
 
 History
 =======
+
+0.2.1 (2010-10-11)
+----------------
+
+ * new parameters ``visible_terms_from_registry`` and
+   ``hidden_terms_from_registry`` which reads values pirectly from
+   `plone.registry`_. [garbas]
 
 0.2 (2010-10-11)
 ----------------
@@ -232,3 +281,4 @@ History
 .. _`4teamwork`: http://4teamwork.ch
 .. _`zope.schema`: http://pypi.python.org/pypi/zope.schema
 .. _`mr.igor`: http://pypi.python.org/pypi/mr.igor
+.. _`plone.registry`: http://pypi.python.org/pypi/plone.registry

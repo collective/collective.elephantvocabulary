@@ -1,10 +1,14 @@
 
 from zope.interface import implements
+from zope.component import provideUtility
 from zope.schema.vocabulary import getVocabularyRegistry
 from zope.schema.vocabulary import SimpleVocabulary
 from zope.schema.vocabulary import SimpleTerm
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.interfaces import ISource
+
+from plone.registry import Registry
+from plone.registry.interfaces import IRegistry
 
 from plone.testing import Layer
 from plone.testing.zca import LAYER_CLEANUP
@@ -35,6 +39,9 @@ class VocabularyLayer(Layer):
 
         registry = getVocabularyRegistry()
         registry.register('example-vocab', ExampleVocabFactory)
+
+        plone_registry = Registry()
+        provideUtility(plone_registry, IRegistry)
 
 
 VOCAB_LAYER = VocabularyLayer()

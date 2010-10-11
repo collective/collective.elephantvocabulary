@@ -24,10 +24,13 @@ setup(name='collective.elephantvocabulary',
       install_requires=[
           'setuptools',
           'zope.interface',
+          'zope.component',
           'zope.schema',
       ],
       extras_require = {
         'tests': [
+            'plone.registry',
+            'zope.dottedname', # should be dependency of plone.registry
             'plone.testing [zca]',
             ]
       },

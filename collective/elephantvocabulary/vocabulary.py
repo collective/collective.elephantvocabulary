@@ -1,31 +1,58 @@
 from zope.interface import implements
+from zope.component import getUtility
 from zope.schema.vocabulary import getVocabularyRegistry
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.interfaces import IContextSourceBinder
 
 from collective.elephantvocabulary.base import WrapperBase
 
+try:
+    from plone.registry.interfaces import IRegistry
+    PLONE_REGISTRY = True
+except:
+    PLONE_REGISTRY = False
+
 
 class VocabularyFactory(object):
 
     implements(IVocabularyFactory, IContextSourceBinder)
 
-    def __init__(self, vocab, visible_terms=None, hidden_terms=None,
+    def __init__(self, vocab,
+                 visible_terms=None,
+                 visible_terms_from_registry=None,
+                 hidden_terms=None,
+                 hidden_terms_from_registry=None,
                  wrapper_class=WrapperBase):
         self.vocab = vocab
         self.visible_terms = visible_terms
+        self.visible_terms_from_registry = visible_terms_from_registry
         self.hidden_terms = hidden_terms
+        self.hidden_terms_from_registry = hidden_terms_from_registry
         self.wrapper_class = wrapper_class
 
+        self.plone_registry = None
+        if PLONE_REGISTRY is True:
+            self.plone_registry = getUtility(IRegistry)
+
     def __call__(self, context):
+
         if isinstance(self.vocab, basestring):
-            original_vocab = getVocabularyRegistry().get(
-                    context, self.vocab)
+            original_vocab = getVocabularyRegistry().get(context, self.vocab)
         else:
             original_vocab = self.vocab
 
         if callable(self.visible_terms):
             self.visible_terms = self.visible_terms(context, original_vocab)
+
+        if self.plone_registry is not None and \
+           self.visible_terms_from_registry is not None:
+            record = self.plone_registry.get(self.visible_terms_from_registry,
+                                             None)
+            if record and type(record) == list:
+                if type(self.visible_terms) == list:
+                    self.visible_terms.append(record)
+                else:
+                    self.visible_terms = record
 
         if getattr(original_vocab, 'visible_terms', False) and \
            isinstance(original_vocab.visible_terms, list):
@@ -36,6 +63,16 @@ class VocabularyFactory(object):
 
         if callable(self.hidden_terms):
             self.hidden_terms = self.hidden_terms(context, original_vocab)
+
+        if self.plone_registry is not None and \
+           self.hidden_terms_from_registry is not None:
+            record = self.plone_registry.get(self.hidden_terms_from_registry,
+                                             None)
+            if record and type(record) == list:
+                if type(self.hidden_terms) == list:
+                    self.hidden_terms.append(record)
+                else:
+                    self.hidden_terms = record
 
         if getattr(original_vocab, 'hidden_terms', False) and \
            isinstance(original_vocab.hidden_terms, list):

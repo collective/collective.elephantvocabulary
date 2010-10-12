@@ -240,8 +240,14 @@ Todo
 History
 =======
 
+0.2.2 (2010-10-12)
+------------------
+
+ * support for other type of vocabs (IVocabulary, IIterableSource) [garbas]
+ * BUG(Fixed): registry should be not be loaded at __init__ time [garbas]
+
 0.2.1 (2010-10-11)
-----------------
+------------------
 
  * new parameters ``visible_terms_from_registry`` and
    ``hidden_terms_from_registry`` which reads values pirectly from

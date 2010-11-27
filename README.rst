@@ -58,7 +58,7 @@ returns ``VocabularyFactory`` which needs to be called with context
     >>> wrapped_vocab.getTerm(3).value
     3
 
-Similar we can to to limit items shown only to the set we want (via
+Similar we can limit items shown only to the set we want (via
 ``visible_terms``)
 
     >>> wrapped_vocab = wrap_vocabulary(example_vocab,
@@ -250,7 +250,7 @@ History
 ------------------
 
  * new parameters ``visible_terms_from_registry`` and
-   ``hidden_terms_from_registry`` which reads values pirectly from
+   ``hidden_terms_from_registry`` which reads values directly from
    `plone.registry`_. [garbas]
 
 0.2 (2010-10-11)

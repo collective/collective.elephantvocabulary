@@ -1,17 +1,25 @@
+import os
 from setuptools import setup, find_packages
 
-version = '0.2.3dev'
+version = '0.2.3.dev0'
+long_description = '\n\n'.join([
+    open(filename).read() for filename in (
+        'README.rst',
+        os.path.join('collective', 'elephantvocabulary', 'tests.rst'),
+        'CREDITS.rst',
+        'CHANGES.rst',)
+        ])
 
 setup(name='collective.elephantvocabulary',
       version=version,
       description="type of zope vocabularies that dont \"forget\", like \
                    elephants",
-      long_description=open("README.rst").read(),
+      long_description=long_description,
       classifiers=[
-        "Programming Language :: Python",
-        "Programming Language :: Zope",
-        "License :: OSI Approved :: GNU General Public License (GPL)",
-        ],
+          "Programming Language :: Python",
+          "Programming Language :: Zope",
+          "License :: OSI Approved :: GNU General Public License (GPL)",
+          ],
       keywords='zope plone vocabulary',
       author='Rok Garbas',
       author_email='rok@garbas.si',
@@ -28,11 +36,11 @@ setup(name='collective.elephantvocabulary',
           'zope.schema',
       ],
       extras_require = {
-        'tests': [
-            'plone.registry',
-            'zope.dottedname', # should be dependency of plone.registry
-            'plone.testing [zca]',
-            ]
+          'tests': [
+              'plone.registry',
+              'zope.dottedname',  # should be dependency of plone.registry
+              'plone.testing [zca]',
+              ]
       },
       entry_points="""
       # -*- Entry points: -*-

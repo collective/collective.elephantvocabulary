@@ -1,4 +1,3 @@
-import os
 import unittest2 as unittest
 import doctest
 
@@ -10,7 +9,7 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTests([
         layered(doctest.DocFileSuite(
-                    os.path.join('..', '..', 'README.rst'),
+                    'tests.rst',
                     package='collective.elephantvocabulary',
                     optionflags=doctest.ELLIPSIS),
                 layer = VOCAB_LAYER),

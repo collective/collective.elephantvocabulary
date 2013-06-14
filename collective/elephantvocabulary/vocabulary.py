@@ -48,7 +48,7 @@ class VocabularyFactory(object):
             self.visible_terms = self.visible_terms(context, original_vocab)
 
         if self.plone_registry is not None and \
-           self.visible_terms_from_registry is not None:
+                self.visible_terms_from_registry is not None:
             record = self.plone_registry.get(self.visible_terms_from_registry,
                                              None)
             if record and type(record) == list:
@@ -58,7 +58,7 @@ class VocabularyFactory(object):
                     self.visible_terms = record
 
         if getattr(original_vocab, 'visible_terms', False) and \
-           isinstance(original_vocab.visible_terms, list):
+                isinstance(original_vocab.visible_terms, list):
             if self.visible_terms is None:
                 self.visible_terms = original_vocab.visible_terms
             else:
@@ -68,7 +68,7 @@ class VocabularyFactory(object):
             self.hidden_terms = self.hidden_terms(context, original_vocab)
 
         if self.plone_registry is not None and \
-           self.hidden_terms_from_registry is not None:
+                self.hidden_terms_from_registry is not None:
             record = self.plone_registry.get(self.hidden_terms_from_registry,
                                              None)
             if record and type(record) == list:
@@ -78,7 +78,7 @@ class VocabularyFactory(object):
                     self.hidden_terms = record
 
         if getattr(original_vocab, 'hidden_terms', False) and \
-           isinstance(original_vocab.hidden_terms, list):
+                isinstance(original_vocab.hidden_terms, list):
             if self.hidden_terms is None:
                 self.hidden_terms = original_vocab.hidden_terms
             else:

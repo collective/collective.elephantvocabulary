@@ -20,12 +20,14 @@ class ExampleSource(SimpleVocabulary):
     def search(self):
         return [SimpleTerm(1), SimpleTerm(2)]
 
+
 class ExampleVocabFactory(SimpleVocabulary):
     implements(IVocabularyFactory)
     def __init__(self, context):
         super(ExampleVocabFactory, self).__init__(
                 [SimpleTerm(1), SimpleTerm(2),
                  SimpleTerm(3), SimpleTerm(4)])
+
 
 class VocabularyLayer(Layer):
     defaultBases = (LAYER_CLEANUP,)

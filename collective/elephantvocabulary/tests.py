@@ -15,4 +15,3 @@ def test_suite():
                 layer = VOCAB_LAYER),
     ])
     return suite
-

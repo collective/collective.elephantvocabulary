@@ -26,21 +26,20 @@ class WrapperBase(object):
 
     def _wrap_vocab(self, vocab):
         for term in vocab:
-            if self.visible_terms is None and \
-               self.hidden_terms is None:
+            if self.visible_terms is None and self.hidden_terms is None:
                 yield term
             elif self.visible_terms is None and \
-                 self.hidden_terms is not None and \
-                 term.value not in self.hidden_terms:
+                    self.hidden_terms is not None and \
+                    term.value not in self.hidden_terms:
                 yield term
             elif self.visible_terms is not None and \
-                 self.hidden_terms is None and \
-                 term.value in self.visible_terms:
+                    self.hidden_terms is None and \
+                    term.value in self.visible_terms:
                 yield term
             elif self.visible_terms is not None and \
-                 self.hidden_terms is not None and \
-                 term.value in self.visible_terms and \
-                 term.value not in self.hidden_terms:
+                    self.hidden_terms is not None and \
+                    term.value in self.visible_terms and \
+                    term.value not in self.hidden_terms:
                 yield term
 
     def search(self, *args, **kw):

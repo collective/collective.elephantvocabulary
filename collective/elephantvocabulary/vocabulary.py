@@ -53,7 +53,9 @@ class VocabularyFactory(object):
                                              None)
             if record and type(record) == list:
                 if type(self.visible_terms) == list:
-                    self.visible_terms.append(record)
+                    for term in record:
+                        if not term in self.visible_terms:
+                            self.visible_terms.append(term)
                 else:
                     self.visible_terms = record
 
@@ -73,7 +75,9 @@ class VocabularyFactory(object):
                                              None)
             if record and type(record) == list:
                 if type(self.hidden_terms) == list:
-                    self.hidden_terms.append(record)
+                    for term in record:
+                        if not term in self.hidden_terms:
+                            self.hidden_terms.append(term)
                 else:
                     self.hidden_terms = record
 

@@ -11,7 +11,12 @@ from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 
 from plone.testing import Layer
-from plone.testing.zca import LAYER_CLEANUP
+from plone.testing.zca import ZCML_DIRECTIVES
+
+from collective.elephantvocabulary.caching import ICachedRecordsRegistry
+from collective.elephantvocabulary.caching import CachedRecordsRegistry
+
+from zope.configuration.xmlconfig import XMLConfig
 
 
 class ExampleSource(SimpleVocabulary):
@@ -30,9 +35,12 @@ class ExampleVocabFactory(SimpleVocabulary):
 
 
 class VocabularyLayer(Layer):
-    defaultBases = (LAYER_CLEANUP,)
+    defaultBases = (ZCML_DIRECTIVES,)
 
     def setUp(self):
+        import plone.memoize
+        XMLConfig('configure.zcml', plone.memoize)()
+
         self.context = None
         self.example_vocab = SimpleVocabulary.fromValues([1, 2, 3, 4])
         self.example_source = ExampleSource(
@@ -44,6 +52,9 @@ class VocabularyLayer(Layer):
 
         plone_registry = Registry()
         provideUtility(plone_registry, IRegistry)
+
+        voca_registry = CachedRecordsRegistry()
+        provideUtility(voca_registry, ICachedRecordsRegistry)
 
 
 VOCAB_LAYER = VocabularyLayer()

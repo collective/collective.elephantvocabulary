@@ -187,10 +187,10 @@ Or we can use them in combination.
     ...         field.List(title=u"Test", min_length=0, max_length=10, 
     ...                    value_type=field.Int(title=u"Value")))
     >>> example_registry_record2.value = [1, 2, 3]
-    >>> registry.records['example.visible_terms'] = example_registry_record2
+    >>> registry.records['example2.visible_terms'] = example_registry_record2
 
     >>> wrapped_vocab = wrap_vocabulary(example_vocab,
-    ...         visible_terms_from_registry='example.visible_terms',
+    ...         visible_terms_from_registry='example2.visible_terms',
     ...         hidden_terms_from_registry='example.hidden_terms')(context)
     >>> [i.value for i in wrapped_vocab]
     [3]

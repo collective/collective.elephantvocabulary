@@ -13,5 +13,15 @@ def test_suite():
                     package='collective.elephantvocabulary',
                     optionflags=doctest.ELLIPSIS),
                 layer = VOCAB_LAYER),
+        layered(doctest.DocFileSuite(
+                    'test_terms_from_registry.rst',
+                    package='collective.elephantvocabulary',
+                    optionflags=doctest.ELLIPSIS),
+                layer = VOCAB_LAYER),
+        layered(doctest.DocFileSuite(
+                    'test_caching.rst',
+                    package='collective.elephantvocabulary',
+                    optionflags=doctest.ELLIPSIS),
+                layer = VOCAB_LAYER),
     ])
     return suite

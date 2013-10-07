@@ -34,6 +34,7 @@ setup(name='collective.elephantvocabulary',
           'zope.interface',
           'zope.component',
           'zope.schema',
+          'plone.memoize',
       ],
       extras_require = {
           'tests': [

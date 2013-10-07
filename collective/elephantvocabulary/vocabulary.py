@@ -1,10 +1,14 @@
-from zope.interface import implements
+from plone.memoize import ram
 from zope.component import getUtility
-from zope.schema.vocabulary import getVocabularyRegistry
-from zope.schema.interfaces import IVocabularyFactory
+from zope.interface import implements
 from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import getVocabularyRegistry
 
 from collective.elephantvocabulary.base import WrapperBase
+from collective.elephantvocabulary.caching import _record_from_registry_cachekey
+from collective.elephantvocabulary.caching import ICachedRecordsRegistry
+
 
 try:
     from plone.registry.interfaces import IRegistry
@@ -29,13 +33,21 @@ class VocabularyFactory(object):
         self.hidden_terms = hidden_terms
         self.hidden_terms_from_registry = hidden_terms_from_registry
         self.wrapper_class = wrapper_class
-        self._plone_registry = None
 
-    @property
-    def plone_registry(self):
-        if PLONE_REGISTRY is True and not self._plone_registry:
-            self._plone_registry = getUtility(IRegistry)
-        return self._plone_registry
+        voca_registry = getUtility(ICachedRecordsRegistry)
+        if self.hidden_terms_from_registry is not None:
+            voca_registry.register_registry_record(
+                self.hidden_terms_from_registry)
+        if self.visible_terms_from_registry is not None:
+            voca_registry.register_registry_record(
+                self.visible_terms_from_registry)
+
+
+    @ram.cache(_record_from_registry_cachekey)
+    def record_from_registry(self, key):
+        registry = getUtility(IRegistry)
+        record = registry.get(key, None)
+        return record
 
     def __call__(self, context):
 
@@ -47,10 +59,8 @@ class VocabularyFactory(object):
         if callable(self.visible_terms):
             self.visible_terms = self.visible_terms(context, original_vocab)
 
-        if self.plone_registry is not None and \
-                self.visible_terms_from_registry is not None:
-            record = self.plone_registry.get(self.visible_terms_from_registry,
-                                             None)
+        if self.visible_terms_from_registry is not None and PLONE_REGISTRY:
+            record = self.record_from_registry(self.visible_terms_from_registry)
             if record and type(record) == list:
                 if type(self.visible_terms) == list:
                     for term in record:
@@ -69,10 +79,8 @@ class VocabularyFactory(object):
         if callable(self.hidden_terms):
             self.hidden_terms = self.hidden_terms(context, original_vocab)
 
-        if self.plone_registry is not None and \
-                self.hidden_terms_from_registry is not None:
-            record = self.plone_registry.get(self.hidden_terms_from_registry,
-                                             None)
+        if self.hidden_terms_from_registry is not None and PLONE_REGISTRY:
+            record = self.record_from_registry(self.hidden_terms_from_registry)
             if record and type(record) == list:
                 if type(self.hidden_terms) == list:
                     for term in record:

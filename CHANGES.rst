@@ -4,6 +4,10 @@ History
 0.2.3 (unreleased)
 ------------------
 
+ * Don't memoize the persistent plone.registry utility. This avoids issues
+   with object access across different ZODB connections (see issue #2).
+   [lgraf]
+
  * Split the ``README.rst`` up into several files. Put the testing
    part in ``tests.rst`` in the main directory so this test file can also
    be found when we are distributed on PyPI. [maurits]

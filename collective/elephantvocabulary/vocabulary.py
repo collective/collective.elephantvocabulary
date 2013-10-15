@@ -29,13 +29,10 @@ class VocabularyFactory(object):
         self.hidden_terms = hidden_terms
         self.hidden_terms_from_registry = hidden_terms_from_registry
         self.wrapper_class = wrapper_class
-        self._plone_registry = None
 
     @property
     def plone_registry(self):
-        if PLONE_REGISTRY is True and not self._plone_registry:
-            self._plone_registry = getUtility(IRegistry)
-        return self._plone_registry
+        return getUtility(IRegistry)
 
     def __call__(self, context):
 

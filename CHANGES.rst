@@ -1,7 +1,8 @@
 History
 =======
 
-0.2.3 (unreleased)
+
+0.2.3 (2013-10-25)
 ------------------
 
  * Don't memoize the persistent plone.registry utility. This avoids issues
@@ -9,7 +10,7 @@ History
    [lgraf]
 
  * Avoid nesting internal term lists (see issue #3). [lgraf]
- 
+
  * Avoid indefinite growth of internal term lists (see issue #4). [lgraf]
 
  * Split the ``README.rst`` up into several files. Put the testing

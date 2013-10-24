@@ -1,5 +1,5 @@
-*.swp
 *.pyc
+*.swp
 /.installed.cfg
 /bin
 /collective.elephantvocabulary.egg-info
@@ -10,3 +10,7 @@
 /eggs
 /include
 /lib
+/nixenv
+/.coverage
+/htmlcov/
+/parts/

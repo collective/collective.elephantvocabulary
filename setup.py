@@ -8,7 +8,7 @@ long_description = '\n\n'.join([
         os.path.join('collective', 'elephantvocabulary', 'tests.rst'),
         'CREDITS.rst',
         'CHANGES.rst',)
-        ])
+    ])
 
 setup(name='collective.elephantvocabulary',
       version=version,
@@ -35,8 +35,8 @@ setup(name='collective.elephantvocabulary',
           'zope.component',
           'zope.schema',
       ],
-      extras_require = {
-          'tests': [
+      extras_require={
+          'test': [
               'plone.registry',
               'zope.dottedname',  # should be dependency of plone.registry
               'plone.testing [zca]',

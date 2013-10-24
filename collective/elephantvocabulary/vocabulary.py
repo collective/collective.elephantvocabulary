@@ -85,6 +85,8 @@ class VocabularyFactory(object):
             else:
                 self.hidden_terms += original_vocab.hidden_terms
 
-        return self.wrapper_class(original_vocab,
-                    visible_terms=self.visible_terms,
-                    hidden_terms=self.hidden_terms)
+        return self.wrapper_class(
+            original_vocab,
+            visible_terms=self.visible_terms,
+            hidden_terms=self.hidden_terms,
+        )

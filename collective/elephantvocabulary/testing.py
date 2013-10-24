@@ -23,10 +23,11 @@ class ExampleSource(SimpleVocabulary):
 
 class ExampleVocabFactory(SimpleVocabulary):
     implements(IVocabularyFactory)
+
     def __init__(self, context):
-        super(ExampleVocabFactory, self).__init__(
-                [SimpleTerm(1), SimpleTerm(2),
-                 SimpleTerm(3), SimpleTerm(4)])
+        super(ExampleVocabFactory, self).__init__([
+            SimpleTerm(1), SimpleTerm(2),
+            SimpleTerm(3), SimpleTerm(4)])
 
 
 class VocabularyLayer(Layer):
@@ -35,9 +36,9 @@ class VocabularyLayer(Layer):
     def setUp(self):
         self.context = None
         self.example_vocab = SimpleVocabulary.fromValues([1, 2, 3, 4])
-        self.example_source = ExampleSource(
-                [SimpleTerm(1), SimpleTerm(2),
-                 SimpleTerm(3), SimpleTerm(4)])
+        self.example_source = ExampleSource([
+            SimpleTerm(1), SimpleTerm(2),
+            SimpleTerm(3), SimpleTerm(4)])
 
         registry = getVocabularyRegistry()
         registry.register('example-vocab', ExampleVocabFactory)

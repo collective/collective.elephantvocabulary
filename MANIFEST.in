@@ -1,1 +1,3 @@
 include *.txt *.rst
+recursive-include collective/elephantvocabulary *
+global-exclude *.pyc

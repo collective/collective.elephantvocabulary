@@ -9,12 +9,12 @@ Some example content and vocabularies
     >>> [i.value for i in example_vocab]
     [1, 2, 3, 4]
 
-Below is out wraper method we use to make our existing vocab more 
+Below is out wraper method we use to make our existing vocab more
 elephant-like.
 
     >>> from collective.elephantvocabulary import wrap_vocabulary
 
-In first exampe we pass to our ``wrap_vocabulary`` a vocabulary of 
+In first exampe we pass to our ``wrap_vocabulary`` a vocabulary of
 [1, 2, 3, 4] and we set terms 2 and 3 to hidden. ``wrap_vocabulary``
 returns ``VocabularyFactory`` which needs to be called with context
 (you could also register it with as utility).
@@ -163,7 +163,7 @@ plone.registry ``collective.elephantvocabulary`` provides helper parameters:
     >>> from plone.registry.interfaces import IRegistry
 
     >>> example_registry_record = Record(
-    ...         field.List(title=u"Test", min_length=0, max_length=10, 
+    ...         field.List(title=u"Test", min_length=0, max_length=10,
     ...                    value_type=field.Int(title=u"Value")))
     >>> example_registry_record.value = [1, 2]
 
@@ -184,7 +184,7 @@ plone.registry ``collective.elephantvocabulary`` provides helper parameters:
 Or we can use them in combination.
 
     >>> example_registry_record2 = Record(
-    ...         field.List(title=u"Test", min_length=0, max_length=10, 
+    ...         field.List(title=u"Test", min_length=0, max_length=10,
     ...                    value_type=field.Int(title=u"Value")))
     >>> example_registry_record2.value = [1, 2, 3]
     >>> registry.records['example.visible_terms'] = example_registry_record2

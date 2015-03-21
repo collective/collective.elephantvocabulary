@@ -1,6 +1,12 @@
 History
 =======
 
+0.2.5 (unreleased)
+------------------
+
+- Whitespaces cleanup.
+  [gforcada]
+
 
 0.2.4 (2013-10-26)
 ------------------

@@ -1,7 +1,7 @@
 History
 =======
 
-0.2.5 (unreleased)
+0.2.5 (2015-03-21)
 ------------------
 
 - Whitespaces cleanup.

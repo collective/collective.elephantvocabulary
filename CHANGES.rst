@@ -4,7 +4,13 @@ History
 0.2.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+New:
+
+- *add item here*
+
+Fixes:
+
+- *add item here*
 
 
 0.2.5 (2015-03-21)

@@ -1,14 +1,13 @@
 
-from zope.interface import implements
+from zope.interface import implementer
 from collective.elephantvocabulary.interfaces import IElephantVocabulary
 from zope.schema.interfaces import ISource
 from zope.schema.interfaces import IIterableSource
 from zope.schema.interfaces import IVocabulary
 
 
+@implementer(IElephantVocabulary, IVocabulary, ISource, IIterableSource)
 class WrapperBase(object):
-
-    implements(IElephantVocabulary, IVocabulary, ISource, IIterableSource)
 
     def __init__(self, vocab, visible_terms, hidden_terms):
         self.vocab = vocab

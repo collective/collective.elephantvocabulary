@@ -1,4 +1,4 @@
-from zope.interface import implements
+from zope.interface import implements, implementer
 from zope.component import getUtility
 from zope.schema.vocabulary import getVocabularyRegistry
 from zope.schema.interfaces import IVocabularyFactory
@@ -13,9 +13,8 @@ except:
     PLONE_REGISTRY = False
 
 
+@implementer(IVocabularyFactory, IContextSourceBinder)
 class VocabularyFactory(object):
-
-    implements(IVocabularyFactory, IContextSourceBinder)
 
     def __init__(self, vocab,
                  visible_terms=None,

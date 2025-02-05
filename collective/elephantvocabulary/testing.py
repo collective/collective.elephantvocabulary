@@ -1,5 +1,5 @@
 
-from zope.interface import implements
+from zope.interface import implementer
 from zope.component import provideUtility
 from zope.schema.vocabulary import getVocabularyRegistry
 from zope.schema.vocabulary import SimpleVocabulary
@@ -14,15 +14,15 @@ from plone.testing import Layer
 from plone.testing.zca import LAYER_CLEANUP
 
 
+@implementer(ISource)
 class ExampleSource(SimpleVocabulary):
-    implements(ISource)
 
     def search(self):
         return [SimpleTerm(1), SimpleTerm(2)]
 
 
+@implementer(IVocabularyFactory)
 class ExampleVocabFactory(SimpleVocabulary):
-    implements(IVocabularyFactory)
 
     def __init__(self, context):
         super(ExampleVocabFactory, self).__init__([

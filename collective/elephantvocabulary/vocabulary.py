@@ -35,7 +35,7 @@ class VocabularyFactory(object):
 
     def __call__(self, context):
 
-        if isinstance(self.vocab, basestring):
+        if isinstance(self.vocab, str):
             original_vocab = getVocabularyRegistry().get(context, self.vocab)
         else:
             original_vocab = self.vocab

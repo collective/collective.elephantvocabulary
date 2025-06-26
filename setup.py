@@ -5,7 +5,7 @@ version = '0.2.6.dev0'
 long_description = '\n\n'.join([
     open(filename).read() for filename in (
         'README.rst',
-        os.path.join('collective', 'elephantvocabulary', 'tests.rst'),
+        os.path.join('src', 'collective', 'elephantvocabulary', 'tests.rst'),
         'CREDITS.rst',
         'CHANGES.rst',)
     ])
@@ -17,8 +17,9 @@ setup(
                  elephants",
     long_description=long_description,
     classifiers=[
+        "Framework :: Plone :: 6.1",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Zope",
         "License :: OSI Approved :: GNU General Public License (GPL)",
     ],
@@ -27,7 +28,8 @@ setup(
     author_email='rok@garbas.si',
     url='http://github.com/collective/collective.elephantvocabulary',
     license='GPL',
-    packages=find_packages(exclude=['ez_setup']),
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
     namespace_packages=['collective'],
     include_package_data=True,
     zip_safe=False,

@@ -6,11 +6,7 @@ from zope.schema.interfaces import IContextSourceBinder
 
 from collective.elephantvocabulary.base import WrapperBase
 
-try:
-    from plone.registry.interfaces import IRegistry
-    PLONE_REGISTRY = True
-except:
-    PLONE_REGISTRY = False
+from plone.registry.interfaces import IRegistry
 
 
 @implementer(IVocabularyFactory, IContextSourceBinder)

@@ -20,7 +20,7 @@ returns ``VocabularyFactory`` which needs to be called with context
 (you could also register it with as utility).
 
     >>> wrapped_vocab_factory = wrap_vocabulary(example_vocab, hidden_terms=[2, 3])
-    >>> print wrapped_vocab_factory
+    >>> print(wrapped_vocab_factory)
     <collective.elephantvocabulary.vocabulary.VocabularyFactory object at ...>
 
     >>> wrapped_vocab = wrapped_vocab_factory(context)

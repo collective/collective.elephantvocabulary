@@ -1,5 +1,5 @@
 import os
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 version = '0.2.6.dev0'
 long_description = '\n\n'.join([
@@ -17,7 +17,7 @@ setup(
                  elephants",
     long_description=long_description,
     classifiers=[
-        "Framework :: Plone :: 6.1",
+        "Framework :: Plone :: 6.2",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.13",
         "Programming Language :: Zope",
@@ -28,11 +28,11 @@ setup(
     author_email='rok@garbas.si',
     url='http://github.com/collective/collective.elephantvocabulary',
     license='GPL',
-    packages=find_packages('src'),
+    packages=find_namespace_packages('src', include=['collective.*']),
     package_dir={'': 'src'},
-    namespace_packages=['collective'],
     include_package_data=True,
     zip_safe=False,
+    python_requires='>=3.10',
     install_requires=[
         'setuptools',
         'zope.interface',

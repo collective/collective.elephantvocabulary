@@ -12,6 +12,8 @@ Fixes:
 
 - Fix TypeError: Class advice impossible in Python3 using the @implementer class decorator
 
+- Switched to PEP 420 native namespace packages. [chris-adam]
+
 
 0.2.5 (2015-03-21)
 ------------------
